@@ -1,38 +1,53 @@
-const button = document.querySelector('button');
-const input = document.querySelector('input');
-const results = document.getElementById('results');
+const SUPABASE_URL = "https://laqwgudyogubqkyihxdw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_bITSd7RbMdfwaknDXV-x7A_yEInJl60";
 
-const snacks = [
-    {name: 'Takis Fuego', store: 'Circle K - 0.4 miles away' },
-    {name: 'Doritos Nacho Cheese', store: 'Walmart - 1.2 miles away'},
-    {name: 'Hi-Chew Original', store: 'Target - 1.8 miles away'},
-    {name: 'Flamin Hot Cheetos', store: 'Walgreens - 0.7 miles away'},
-    {name: 'Takis Blue Heat', store: '7-Eleven - 0.9 miles away'},
-]
+const searchInput = document.querySelector(".search-bar input");
+const searchButton = document.querySelector(".search-bar button");
+const resultsDiv = document.getElementById("results");
 
-button.addEventListener('click', function() {
-    const searchTerm = input.value.toLowerCase();
-    results.innerHTML = ''
+async function searchSnacks(query) {
+    resultsDiv.innerHTML = "<p style-'color:#7a6f65;'>Searching...</p>";
 
-    if (searchTerm === ''){
-        results.innerHTML = '<p>Please type a snack name first.</p>';
-        return
-    } 
+    const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/Snacks?or=(name.ilike.*${query}*,brandilike.*${query}*,category.ilike.*{query}*)&select=*`,
+        {
+            headers: {
+                apikey: SUPABASE_KEY,
+                Authorization: `Bearer ${SUPABASE_KEY}`,
 
-    const mathces = snacks.filter(function(snack) {
-        return snack.name.toLowerCase().includes(searchTerm)
-    })
+            },
+        }
+    );
 
-    if (mathces.length === 0) {
-        results.innerHTML = '<p>No snacks found. Try another Search.</p>'
-    } else {
-        mathces.forEach(function(snack) {
-            results.innerHTML += `
-                <div class="result-card">
-                    <div class="result-name">${snack.name}</div>
-                    <div class="result-store"> ${snack.store}</div>
-                </div>
-            `
-        })
+    const snack = await response.json();
+
+    if(!snack.length) {
+        resultsDiv.innerHTML = "<p style='color:#7a6f65;'>No snacks found. Try another search!</p>";
+        return;
     }
-})
+
+    resultsDiv.innerHTML = searchSnacks
+        .map(
+            (snack) => `
+            <div class="result-card">
+                <div class="result-name">${snack.name}</div>
+                <div class="result-store">${snack.brand}</div>
+                <div class="result-store'>${snack.category}</div>
+            </div>
+        `
+        )
+        .join("");
+}
+
+searchButton.addEventListener("click", () => {
+    const query = searchInput.vaule.trim();
+    if (query) (searchSnacks(query));
+});
+
+searchInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        const query = searchInput.value.trim();
+        if (query) searchSnacks(query);
+    }
+});
+
