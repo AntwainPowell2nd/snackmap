@@ -6,48 +6,52 @@ const searchButton = document.querySelector(".search-bar button");
 const resultsDiv = document.getElementById("results");
 
 async function searchSnacks(query) {
-    resultsDiv.innerHTML = "<p style-'color:#7a6f65;'>Searching...</p>";
+  resultsDiv.innerHTML = "<p style='color:#7a6f65;'>Searching...</p>";
 
+  try {
     const response = await fetch(
-        `${SUPABASE_URL}/rest/v1/Snacks?or=(name.ilike.*${query}*,brandilike.*${query}*,category.ilike.*{query}*)&select=*`,
-        {
-            headers: {
-                apikey: SUPABASE_KEY,
-                Authorization: `Bearer ${SUPABASE_KEY}`,
-
-            },
-        }
+      `${SUPABASE_URL}/rest/v1/Snacks?or=(name.ilike.*${query}*,brand.ilike.*${query}*,category.ilike.*${query}*)&select=*`,
+      {
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+        },
+      }
     );
 
-    const snack = await response.json();
+    const snacks = await response.json();
+    console.log("Response:", snacks);
 
-    if(!snack.length) {
-        resultsDiv.innerHTML = "<p style='color:#7a6f65;'>No snacks found. Try another search!</p>";
-        return;
+    if (!Array.isArray(snacks) || snacks.length === 0) {
+      resultsDiv.innerHTML = "<p style='color:#7a6f65;'>No snacks found. Try another search!</p>";
+      return;
     }
 
-    resultsDiv.innerHTML = searchSnacks
-        .map(
-            (snack) => `
-            <div class="result-card">
-                <div class="result-name">${snack.name}</div>
-                <div class="result-store">${snack.brand}</div>
-                <div class="result-store'>${snack.category}</div>
-            </div>
-        `
-        )
-        .join("");
+    resultsDiv.innerHTML = snacks
+      .map(
+        (snack) => `
+        <div class="result-card">
+          <div class="result-name">${snack.name}</div>
+          <div class="result-store">${snack.brand}</div>
+          <div class="result-store">${snack.category}</div>
+        </div>
+      `
+      )
+      .join("");
+  } catch (err) {
+    console.error("Error:", err);
+    resultsDiv.innerHTML = "<p style='color:red;'>Something went wrong. Check the console.</p>";
+  }
 }
 
 searchButton.addEventListener("click", () => {
-    const query = searchInput.vaule.trim();
-    if (query) (searchSnacks(query));
+  const query = searchInput.value.trim();
+  if (query) searchSnacks(query);
 });
 
 searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-        const query = searchInput.value.trim();
-        if (query) searchSnacks(query);
-    }
+  if (e.key === "Enter") {
+    const query = searchInput.value.trim();
+    if (query) searchSnacks(query);
+  }
 });
-
