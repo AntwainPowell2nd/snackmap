@@ -8,34 +8,41 @@ body {
 
 nav {
     background-color: #1c1815;
-    padding: 20px 40px;
+    padding: 20px 60px;
     gap: 30px;
     align-items: center;
+    display: flex;
 }
 
 nav span {
     color: #ffd44d;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 24px;
+    margin-right: auto;
 }
 
 nav a {
     color: #7a6f65;
     text-decoration: none;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #f0e8dc;
 }
 
 .hero {
     text-align: center;
-    padding: 100px 20px;
+    padding: 100px 40px 60px;
 }
 
 h1 {
     font-size: 52px;
     color: #f0e8dc;
-
+    margin-bottom: 40px;
 }
 
-p {
+.hero p {
     color: #7a6f65;
     font-size: 18px;
     margin-bottom: 40px;
@@ -45,55 +52,62 @@ p {
     display: flex;
     justify-content: center;
     gap: 10px;
+    margin-top: 20px;
 }
 
 .search-bar input {
     padding: 14px 20px;
-    width: 400px;
-    border-radius: 50px;
+    width: 460px;
+    border-radius: 999px;
     border: 1px solid #2a2520;
     background-color: #1c1815;
     color: #f0e8dc;
     font-size: 16px;
+    outline: none;
+}
+
+.search-bar input::placeholder {
+    color: #7a6f65;
 }
 
 .search-bar button {
   padding: 14px 28px;
-  border-radius: 50px;
-  border: 0;
-  background: #ff6b1a;
-  color: #ffffff;
+  border-radius: 999px;
+  background-color: #e8651a;
+  border: none;
+  color: white;
   font-size: 16px;
   cursor: pointer;
-  -webkit-appearance: none;
   appearance: none;
 }
 
 #results {
-    margin-top: 40px;
-    width: 100%;
-    max-width: 600px;
+    margin-top: 50px;
+    width: 90%;
+    max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    padding-bottom: 60px;
 }
 
 .result-card {
     background-color: #1c1815;
     border: 1px solid #2a2520;
     border-radius: 12px;
-    padding: 16px 20px;
-    margin-bottom: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
     text-align: left;
 }
 
 .result-name {
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #f0e8dc;
+    margin-bottom: 6px;
 }
 
 .result-store {
     color: #7a6f65;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     margin-top: 4px;
 }
