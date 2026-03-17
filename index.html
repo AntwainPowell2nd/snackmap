@@ -1,67 +1,59 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>SnackMap</title>
-        <link rel="stylesheet" href="style.css"/>
-        <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <head>
+    <title>SnackMap</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  </head>
 
-    </head>
+  <body>
 
-    <body>
+    <nav>
+      <span>SnackMap</span>
+      <a href="#">For Stores</a>
+      <a href="#">For Brands</a>
+    </nav>
 
-        <nav>
+    <div class="hero">
 
-            <span>SnackMap</span>
-            <a href="#">For Stores</a>
-            <a href="#">For Brands</a>
+      <h1>Find any snack. Near you. Right now</h1>
 
-        </nav>
+      <p>Search our catalog of thousands of snacks and see which stores near you have them in stock</p>
 
-        <div class="hero">
+      <div class="search-bar">
+        <input type="text" placeholder="Search for snacks... Takis, Hi-Chew, Doritos"/>
+        <button>Search</button>
+      </div>
 
-            <h1>Find any snack. Near you. Right now</h1>
+      <div id="results"></div>
 
-            <p>Search our catalog of thousands of snacks and see which stores near you have them in stock </p>
-            
-            <div class="search-bar">
+    </div>
 
-                <input type="text" placeholder="Search for snacks... Takis, Hi-Chew, Doritos"/>
+    <!-- Store Locator Modal -->
+    <div id="store-modal" class="modal hidden">
+      <div class="modal-content">
+        <button class="modal-close" id="modal-close">✕</button>
+        <h2 id="modal-title">Stores near you</h2>
 
-                <button>Search</button>
-            </div>
-
-            <div id="results"></div>
-
+        <div id="location-prompt" class="location-prompt">
+          <button id="use-gps">📍 Use my location</button>
+          <span>or</span>
+          <div class="zip-input">
+            <input type="text" id="zip-input" placeholder="Enter zip code"/>
+            <button id="use-zip">Search</button>
+          </div>
         </div>
 
-        <div id="store-modal" class="modal hidden">
-            <div class="modal-content">
-                <button class="modal-close" id=""modal-close">X</button>
-                <h2 id="modal-title">Stores near you</h2>
-                
-                <div id="location-prompt" class="location-prompt">
-                    <button id="use-gps"></button>📍 Use my location</button>
-                    <span>or</span>
-                    
-                    <div class="zip-input">
-                        <input type="text" id="zip-code" placeholder="Enter ZIP code"/>
-                        <button id="use-zip">Search</button>
-                    </div>
+        <div id="map" class="hidden"></div>
+        <div id="store-list"></div>
+      </div>
+    </div>
 
-                </div>
+    <div id="map-overlay" class="hidden"></div>
 
-                <div id="map" class="hidden"></div>
-                <div id="store-list"></div>
-            </div>
-        </div>
-
-        <div id="map-overlay" class="hidden"></div>
-
-        <script src="script.js"></script>
-        <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzWlZwBrcFLUf2huBKTu3Z4vhX4S-qRyI&libraries=places&callback=initMap">
-        </script>
-
-    </body>
-
+    <script src="script.js"></script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzWlZwBrcFLUf2huBKTu3Z4vhX4S-qRyI&libraries=places&callback=initMap">
+    </script>
+  </body>
 </html>
