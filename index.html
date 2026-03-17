@@ -3,6 +3,7 @@
     <head>
         <title>SnackMap</title>
         <link rel="stylesheet" href="style.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
 
     </head>
 
@@ -33,7 +34,33 @@
 
         </div>
 
+        <div id="store-modal" class="modal hidden">
+            <div class="modal-content">
+                <button class="modal-close" id=""modal-close">X</button>
+                <h2 id="modal-title">Stores near you</h2>
+                
+                <div id="location-prompt" class="location-prompt">
+                    <button id="use-gps"></button>📍 Use my location</button>
+                    <span>or</span>
+                    
+                    <div class="zip-input">
+                        <input type="text" id="zip-code" placeholder="Enter ZIP code"/>
+                        <button id="use-zip">Search</button>
+                    </div>
+
+                </div>
+
+                <div id="map" class="hidden"></div>
+                <div id="store-list"></div>
+            </div>
+        </div>
+
+        <div id="map-overlay" class="hidden"></div>
+
         <script src="script.js"></script>
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzWlZwBrcFLUf2huBKTu3Z4vhX4S-qRyI&libraries=places&callback=initMap">
+        </script>
 
     </body>
 
